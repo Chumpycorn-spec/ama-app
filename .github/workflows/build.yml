@@ -1,32 +1,29 @@
-name: Build Windows EXE
+name: Build EXE
 
-on:
-  workflow_dispatch:
+on: [push]
 
 jobs:
   build:
     runs-on: windows-latest
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Python
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
-          pip install pillow "rembg[cpu]" pyinstaller
+          pip install pyinstaller
 
       - name: Build EXE
         run: |
-          pyinstaller --noconfirm --onefile --windowed amazon_gui.py
+          pyinstaller --onefile amazon_gui.py
 
-      - name: Upload EXE artifact
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: amazon-tool-exe
+          name: app-exe
           path: dist/*.exe
