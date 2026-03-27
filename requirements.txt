@@ -1,3 +1,5 @@
 pillow
 rembg
-tkinter
+onnxruntime
+numpy
+opencv-python
